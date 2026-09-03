@@ -132,7 +132,7 @@ header {
 }
 
 .logo-style {
-    height: 50px;
+    height: 6rem;
     width: auto;
     margin-right: 6px;
     transition: all 0.5s;
@@ -144,8 +144,8 @@ header {
 
 .logo-text {
     font-family: "Brush Script MT", "Segoe Script", "Lucida Handwriting", cursive;
-    font-size: 2.1rem;
-    /* font-weight: 600; */
+    font-size: 3.9rem;
+    color:#033cc2;
     white-space: nowrap;
     transition: all 0.5s;
 }
@@ -153,7 +153,7 @@ header {
 .logo-text:hover {
     transform: scale(1.1);
     letter-spacing: 0.5px;
-    filter: drop-shadow(4px 4px 8px rgb(3, 3, 3));
+    filter: drop-shadow(4px 4px 8px rgb(20, 192, 255));
 
 }
 
