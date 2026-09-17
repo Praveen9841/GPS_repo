@@ -59,27 +59,58 @@ function handleContactForm(e) {
 document.addEventListener('DOMContentLoaded', function () {
   const carousel = document.getElementById('project-carousel');
   const dotsContainer = document.getElementById('carousel-dots');
-  const slides = carousel.querySelectorAll('.group');
+  if (!carousel) return;
 
+  const slides = carousel.querySelectorAll('.group');
+  const prevBtn = document.getElementById('prev-review-btn');
+  const nextBtn = document.getElementById('next-review-btn');
+
+  function scrollToSlide(index) {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    const targetSlide = slides[index];
+    if (targetSlide) {
+      carousel.scrollTo({
+        left: targetSlide.offsetLeft - carousel.offsetLeft,
+        behavior: 'smooth'
+      });
+    }
+  }
 
   slides.forEach((_, i) => {
     const dot = document.createElement('span');
     dot.classList.add('dot');
     if (i === 0) dot.classList.add('active');
     dot.addEventListener('click', () => {
-      slides[i].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      scrollToSlide(i);
     });
     dotsContainer.appendChild(dot);
   });
 
   const dots = dotsContainer.querySelectorAll('.dot');
 
+  function getActiveIndex() {
+    const scrollLeft = carousel.scrollLeft;
+    const slideWidth = carousel.clientWidth || 1;
+    return Math.round(scrollLeft / slideWidth);
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      const current = getActiveIndex();
+      scrollToSlide(current - 1);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const current = getActiveIndex();
+      scrollToSlide(current + 1);
+    });
+  }
 
   carousel.addEventListener('scroll', () => {
-    const scrollLeft = carousel.scrollLeft;
-    const slideWidth = carousel.clientWidth;
-    const activeIndex = Math.round(scrollLeft / slideWidth);
-
+    const activeIndex = getActiveIndex();
     dots.forEach((dot, i) => {
       dot.classList.toggle('active', i === activeIndex);
     });
